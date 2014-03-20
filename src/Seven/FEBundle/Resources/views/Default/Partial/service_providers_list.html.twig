@@ -1,10 +1,11 @@
 <ul role="menu" class="dropdown-menu arrow pull-right">
-    {%  if service_providers is iterable %}
+    {% if service_providers|length > 0 %}
         {% for id, name in service_providers %}
             <li>
-                {#<a href="javascript:void(0)" class="toggle-column" data-id="{{ id }}" ><i class="fa fa-check"></i>{{ name }}</a>#}
-                {#<a href="javascript:void(0)" class="toggle-column" ><i class="fa fa-check"></i>{{ service_provider }}</a>#}
+                <a href="javascript:void(0)" class="toggle-column" data-id="{{ id }}" ><i class="fa fa-check"></i>{{ name }}</a>
             </li>
         {% endfor %}
+    {% else %}
+        <li>No Provider Accounts</li>
     {% endif %}
 </ul>
