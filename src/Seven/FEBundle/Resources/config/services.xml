@@ -8,6 +8,7 @@
         <parameter key="login.failure.class">Seven\FEBundle\EventListener\LoginFailureListener</parameter>
         <parameter key="login.success.class">Seven\FEBundle\EventListener\LoginSuccessListener</parameter>
         <parameter key="form.handler.basic.class">Seven\FEBundle\Services\BasicFormHandler</parameter>
+        <parameter key="provider_account.delete.subscriber.class">Seven\FEBundle\EventListener\ProviderAccountDeleteSubscriber</parameter>
     </parameters>
 
     <services>
@@ -23,5 +24,8 @@
             <argument type="service" id="form.factory"/>
         </service>
 
+        <service id="provider_account.delete.subscriber" class="%provider_account.delete.subscriber.class%">
+            <tag name="doctrine.event_subscriber" connection="default"/>
+        </service>
     </services>
 </container>

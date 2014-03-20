@@ -2,7 +2,7 @@
     {%  if service_providers is iterable %}
         {% for id, name in service_providers %}
             <li>
-                <a href="javascript:void(0)" class="toggle-column" data-id="{{ id }}" ><i class="fa fa-check"></i>{{ name }}</a>
+                {#<a href="javascript:void(0)" class="toggle-column" data-id="{{ id }}" ><i class="fa fa-check"></i>{{ name }}</a>#}
                 {#<a href="javascript:void(0)" class="toggle-column" ><i class="fa fa-check"></i>{{ service_provider }}</a>#}
             </li>
         {% endfor %}
