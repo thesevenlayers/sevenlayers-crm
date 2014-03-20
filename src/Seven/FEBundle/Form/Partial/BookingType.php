@@ -27,11 +27,13 @@ class BookingType extends AbstractType
                 ))
             ->add("price", "text", array("error_bubbling" => true))
             ->add($builder->create("start", "date", array(
-                        "error_bubbling" => true
+                        "error_bubbling" => true,
+                        "years" => range((new \DateTime())->format("Y"),(new \DateTime("+10 years"))->format("Y"))
                 ))
             )
             ->add($builder->create("end", "date", array(
-                        "error_bubbling" => true
+                        "error_bubbling" => true,
+                        "years" => range((new \DateTime())->format("Y"),(new \DateTime("+10 years"))->format("Y"))
                 ))
             )
         ;
