@@ -1,0 +1,86 @@
+<section class="panel">
+    <header class="panel-heading">
+        <h2><strong> Mail Hosting</strong></h2>
+    </header>
+    <div class="panel-tools fully color " align="right" data-toolscolor="theme-inverse">
+        <ul class="tooltip-area">
+            <li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-table="table-toggle-column" data-table-target="#toggle-column"  title="Filtration"><i class="fa fa-th-list"></i></button>
+                    <ul role="menu" class="dropdown-menu arrow pull-right">
+                        <li><a onclick="fnShowHide(0,'#toggle-column')" href="javascript:void(0)" class="toggle-column"><i class="fa fa-check"></i> GoDaddy</a></li>
+                        <li><a onclick="fnShowHide(1,'#toggle-column')" href="javascript:void(0)" class="toggle-column"><i class="fa fa-check"></i> Fatcow</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="javascript:void(0)" class="btn btn-collapse" title="Collapse"><i class="fa fa-sort-amount-asc"></i></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div class="head col-md-12">
+            <button data-target="#addMailHosting" data-toggle="modal" class="btn btn-primary pull-right" type="button"><i class="fa fa-pencil"></i> Add Mail Hosting</button>
+            <div class="col-md-4 pull-right  "><div class="input-icon"><i class="ico fa fa-search"></i><input type="text" aria-controls="toggle-column" class="form-control" id="toggle-column_filter_input" placeholder="Search..."></div></div>
+        </div>
+        <div class="col-md-12 serviesTable">
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Name Service</th>
+                    <th>Address</th>
+                    <th>Expiration</th>
+                    <th>Price</th>
+                    <th>Notes</th>
+                    <th>Description</th>
+                    <th width="30%">Action</th>
+                </tr>
+                </thead>
+                <tbody align="center">
+                <tr>
+                    <td><img src="assets/img/avatar_2.png"></td>
+                    <td valign="middle">GoDaddy</td>
+                    <td valign="middle">example_demo.com</td>
+                    <td class="alertDanger" valign="middle">24/11/2014</td>
+                    <td>100$</td>
+                    <td class="popover-area-hover align-lg-center">
+                        <button type="button" class="btn notes btn-success" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Default Popoverr">Notes</button>
+                    </td>
+                    <td class="popover-area-hover align-lg-center">
+                        <button type="button" class="btn notes des btn-success" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Default Popoverr">Description</button>
+                    </td>
+                    <td>
+                                        <span class="tooltip-area">
+                                        <a href="#reNew" data-toggle="modal" class="btn btn-default btn-sm edit" title="Renew"><i class="fa fa-refresh"></i></a>
+                                        <a href="#userAndPas" data-toggle="modal" class="btn btn-default btn-sm edit" title="Open"><i class="fa fa-eye"></i></a>
+                                        <a href="#editMailHosting" data-toggle="modal" class="btn btn-default btn-sm edit" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a href="#Delete" data-toggle="modal" class="btn btn-default btn-sm" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="assets/img/avatar_2.png"></td>
+                    <td>GoDaddy</td>
+                    <td valign="middle">example_demo.com</td>
+                    <td>24/2/2015</td>
+                    <td>150$</td>
+                    <td class="popover-area-hover align-lg-center">
+                        <button type="button" class="btn notes  btn-success" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Default Popoverr">Notes</button>
+                    </td>
+                    <td class="popover-area-hover align-lg-center">
+                        <button type="button" class="btn notes des  desbtn-success" data-toggle="popover" data-placement="top" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-original-title="Default Popoverr">Description</button>
+                    </td>
+                    <td>
+                                        <span class="tooltip-area">
+                                        <a href="#reNew" data-toggle="modal" class="btn btn-default btn-sm edit" title="Renew"><i class="fa fa-refresh"></i></a>
+                                        <a href="#userAndPas" data-toggle="modal" class="btn btn-default btn-sm edit" title="Renew"><i class="fa fa-eye"></i></a>
+                                        <a href="#editMailHosting" data-toggle="modal" class="btn btn-default btn-sm edit" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a href="javascript:void(0)"  class="btn btn-default btn-sm" title="Delete"><i class="fa fa-trash-o"></i></a>
+                                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table> <!--End Table-->
+        </div>
+    </div>
+
+</section>  <!--End Panel Mail Hosting-->

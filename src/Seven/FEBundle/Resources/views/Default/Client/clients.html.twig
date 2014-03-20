@@ -1,0 +1,166 @@
+{% extends "@SevenFE/layout.html.twig" %}
+
+{% block main %}
+<ol class="breadcrumb">
+    <li><a href="{{ url("seven_fe_dashboard") }}">Dashboard</a></li>
+    <li><a href="{{ url("seven_fe_clients") }}">Clients</a></li>
+</ol>
+<!-- //breadcrumb-->
+
+<div id="content">
+    <div class="row">
+
+        <section class="panel">
+            <header class="panel-heading">
+                <h2><strong>Clients</strong></h2>
+            </header>
+            <div class="panel-tools color" align="right" data-toolscolor="theme-inverse">
+                <ul class="tooltip-area">
+                    <li><a href="#addClient" data-toggle="modal" class="btn" title="Add"><i class="fa fa-plus"></i></a></li>
+                    <li><a href="javascript:void(0)" class="btn  btn-collapse" title="Collapse"><i class="fa fa-sort-amount-asc"></i></a></li>
+                    <li><a id="iconSearch" href="javascript:void(0)" class="btn"  title="Search"><i class="fa fa-search"></i></a></li>
+                    <li><input type="text" class="form-control inputSearch" placeholder="Find something..." name="q"></li>
+                </ul>
+            </div>
+            <div class="panel-body wrapperToWatch">
+                {{ render_esi(controller("SevenFEBundle:Client:getClientsListPartial")) }}
+            </div>
+        </section>
+    </div>
+    <!-- // Row-->
+
+    {#</div>#}
+    <!-- //content-->
+{% endblock main %}
+
+{% block moving_content %}
+    {{ parent() }}
+    <div id="addClient" class="modal fade "  data-header-color="#BCD530">
+        {{ form_start(form, {"action": url("seven_fe_clients.new"), "attr": {"class": "new_client_form", "role": "form"} }) }}
+        <div class="modal-header">
+            <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <h4 class="modal-title">Add Client</h4>
+        </div>
+
+        <!-- //modal-header-->
+        <div class="modal-body">
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                <div class="input">
+                    {{ form_widget(form.name, { "attr": {"class": "name_input form-control", "placeholder": "Name"} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.address) }}
+                <div class="input-icon"> <i class="fa fa-map-marker ico"></i>
+                    {{ form_widget(form.address, { "attr": {"class": "address_input form-control", "placeholder": "Address"} }) }}
+                </div>
+            </div>
+            <div class="form-group img_crop">
+                {#{{ form_label(form.logo) }}#}
+                {#{{ form_widget(form.logo, {"id": "sss",  "attr": {"class": "image_upload_btn"} }) }}#}
+                <label>Logo</label>
+                <button class="btn btn-info logo_input" id="test">Select</button>
+                <div style="color: red;font-weight: bold;" class="error_wrapper"></div>
+
+                <div class="uploadAvatar thumbnail">
+                    <img class="" src="{{ asset("bundles/sevenfe/img/avatar.png") }}">
+                    <p></p>
+                </div>
+            </div>
+            <div class="errorsWrapper"></div>
+        </div>
+
+        <!-- //modal-body-->
+                <footer class="panel-footer">
+                    <button class="btn btn-theme newClientSubmit" type="submit">save</button>
+                    <button type="reset" id="newClose" class="btn modal_reset">Cancel</button>
+                </footer>
+            {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+    <!-- //modal-->
+{% endblock moving_content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/actions_ajax.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/dom_observer.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/search_ajax.js") }}"></script>
+    <script type="text/javascript">
+        $(function() {
+
+            /**
+            *----------------------------------------------------------------------------------------
+            * Plupload Specific
+            */
+
+            var uploader = new Pluploader({
+                wrapperID: "addClient",
+                listWrapperClass: "wrapperToWatch",
+                browseClass: "logo_input",
+                saveButtonClass: "newClientSubmit",
+                thumbClass: "thumbnail",
+                targetUrl: '{{ url("seven_fe_clients.new") }}',
+                imageAvatar: "{{ asset('bundles/sevenfe/img/avatar.png') }}",
+                multipartVars:
+                {
+                    "name_input": $(".name_input").val(),
+                    "address_input": $(".address_input").val()
+                },
+                filtersVars:
+                {
+                    mime_types: [
+                        { title: "Image files", extensions : "jpg,gif,png"}
+                    ]
+                },
+                ajaxLoadUrl: '{{ url("seven_fe_clients_list") }}'
+            });
+
+            uploader.init();
+
+            /**
+            *------------------------------------------------------------------------------------
+            * Search Specific
+            */
+
+            $(".inputSearch").hide()
+            $("#iconSearch").click(function(e){
+                e.stopPropagation();
+                $(".inputSearch").show()
+            });
+            $("body").click(function(e){
+                if(!$(e.target).hasClass("inputSearch")){
+                    $(".inputSearch").hide();
+                }
+            })
+
+            $(".inputSearch").on("keyup", function(e){
+                var query = $(e.target).val();
+                var url = Routing.generate('seven_fe_clients_list', {query: query});
+                $(".panel-body").load(url);
+            })
+
+            /*-----------------------------------------------------------------------------*/
+            $("body").on("click", ".clientDelete", function(e){
+                e.preventDefault();
+                var target_url = $(e.target).closest("form").attr("action");
+                $.ajax({
+                    type: "POST",
+                    url: target_url,
+                    success: function(data){
+                        if(data.success)
+                        {
+                            var wrapper = $(e.target).data("wrapper");
+                            $("#"+wrapper).remove();
+                            $(".modal_close").click();
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+
+{% endblock javascripts %}

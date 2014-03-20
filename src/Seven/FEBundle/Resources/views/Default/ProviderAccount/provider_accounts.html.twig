@@ -1,0 +1,108 @@
+<section class="panel">
+    <header class="panel-heading">
+        <h2><strong>Provider Accounts</strong></h2>
+    </header>
+    <div class="panel-tools color" align="right" data-toolscolor="theme-inverse">
+        <ul class="tooltip-area">
+            <li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            data-table="table-toggle-column" data-table-target="#toggle-column" title="Filtration"><i
+                                class="fa fa-th-list"></i></button>
+                    {{ render_esi(controller("SevenFEBundle:Partial:getPartialServiceProviderList", {"sp": service_providers})) }}
+                </div>
+            </li>
+            <li><a href="javascript:void(0)" class="btn  btn-collapse" title="Collapse"><i
+                            class="fa fa-sort-amount-asc"></i></a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div class="contacts marginBottom col-md-12">
+            <div class="Col-md-12 head">
+                <button data-target="#addProviderAccount" data-toggle="modal" class="btn btn-primary pull-right" type="button">
+                    <i class="fa fa-pencil"></i> Add Provider Account
+                </button>
+                <div class="col-md-4 pull-right  ">
+                    <div class="input-icon"><i class="ico fa fa-search"></i><input type="text"
+                                                                                   aria-controls="toggle-column"
+                                                                                   class="form-control inputSearch"
+                                                                                   data-url="seven_fe_provider_accounts.list"
+                                                                                   data-wrapper="provider_accountsWrapper"
+                                                                                   data-controller_id="null"
+                                                                                   id="toggle-column_filter_input"
+                                                                                   placeholder="Search..."></div>
+                </div>
+            </div>
+
+            <div id="provider_accountsWrapper" class="providerList serviesTable">
+                {{ render_esi(controller("SevenFEBundle:ProviderAccount:getProviderAccountPartialList")) }}
+            </div>
+
+        </div>
+        <!--End Contacts-->
+    </div>
+    <!--End Panel Body-->
+</section> <!--EndPanel 2-->
+
+<div id="addProviderAccount" class="modal fade "  data-header-color="#0AA699">
+    {{ form_start(new_provider_account_form, {"action": url("seven_fe_provider_account.new"), "attr":{"id":"provider_accountForm", "role":"form"} }) }}
+
+    <div class="modal-header">
+        <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title">Add Provider Account</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body">
+        {#<form role="form">#}
+        <div class="form-group">
+            {{ form_label(new_provider_account_form.client) }}
+            {#<label>Name</label>#}
+            <div class="input">
+                {{ form_widget(new_provider_account_form.client, {'attr':{'class':'form-control'} }) }}
+                {#<input type="text" placeholder="Name" class="form-control">#}
+            </div>
+        </div>
+        <div class="form-group">
+            {#<label>Title</label>#}
+            {{ form_label(new_provider_account_form.service_provider) }}
+            <div class="input">
+                {{ form_widget(new_provider_account_form.service_provider, {'attr':{'class':'form-control'} }) }}
+                {#<input type="text" placeholder="Title" class="form-control ">#}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_provider_account_form.name) }}
+            {#<label>Department</label>#}
+            <div class="input">
+                {{ form_widget(new_provider_account_form.name, {'attr':{'class':'form-control', "placeholder": "Name" } }) }}
+                {#<input type="text" placeholder="Department" class="form-control ">#}
+            </div>
+        </div>
+        <div class="form-group">
+            {#<label>phone</label>#}
+            {{ form_label(new_provider_account_form.username) }}
+            <div class="input">
+                {{ form_widget(new_provider_account_form.username, {'attr':{'class':'form-control', "placeholder": "Username" } }) }}
+                {#<input type="text" placeholder="Phone" class="form-control ">#}
+            </div>
+        </div>
+        <div class="form-group">
+            {#<label>Email</label>#}
+            {{ form_label(new_provider_account_form.password) }}
+            <div class="input">
+                {#<input type="text" placeholder="Email" class="form-control ">#}
+                {{ form_widget(new_provider_account_form.password, {'attr':{'class':'form-control', "placeholder": "Password" } }) }}
+            </div>
+        </div>
+
+        <div class="errorsWrapper"></div>
+
+    </div>
+    <!-- //modal-body-->
+    <footer class="panel-footer">
+        <button class="btn btn-theme newSubmit" data-route="seven_fe_provider_accounts.list" data-wrapper="provider_accountsWrapper" type="submit">save</button>
+        <button class="btn modal_reset" type="reset">Cancel</button>
+    </footer>
+    {{ form_rest(new_provider_account_form) }}
+    {{ form_end(new_provider_account_form) }}
+</div>

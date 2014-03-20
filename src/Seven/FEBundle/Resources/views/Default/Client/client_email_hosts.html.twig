@@ -1,0 +1,114 @@
+<section class="panel">
+    <header class="panel-heading">
+        <h2><strong>Email Host</strong></h2>
+    </header>
+    <!--End Header-->
+    <div class="panel-tools fully color " align="right" data-toolscolor="theme-inverse">
+        <ul class="tooltip-area">
+            <li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            data-table="table-toggle-column" data-table-target="#toggle-column" title="Filtration"><i
+                                class="fa fa-th-list"></i></button>
+                    {{ render_esi(controller("SevenFEBundle:Partial:getPartialServiceProviderList", {"sp": service_providers})) }}
+                </div>
+            </li>
+            <li><a href="javascript:void(0)" class="btn btn-collapse" title="Collapse"><i
+                            class="fa fa-sort-amount-asc"></i></a></li>
+        </ul>
+    </div>
+    <!--End panel Tools-->
+    <div class="panel-body">
+        <div class="head col-md-12">
+            <button data-target="#addEmailHost" data-toggle="modal" class="btn btn-primary pull-right" type="button"><i
+                        class="fa fa-pencil"></i> Add Email Host
+            </button>
+            <div class="col-md-4 pull-right  ">
+                <div class="input-icon"><i class="ico fa fa-search"></i><input type="text" aria-controls="toggle-column"
+                                                                               class="form-control inputSearch"
+                                                                               data-url="seven_fe_client.email_hosts.display"
+                                                                               data-wrapper="email_hostsWrapper"
+                                                                               id="toggle-column_filter_input"
+                                                                               placeholder="Search...">
+                </div>
+            </div>
+        </div>
+        <!--End Head-->
+        <div id="email_hostsWrapper" class="col-md-12 serviesTable wrapperToWatch">
+            {{ render_esi(controller("SevenFEBundle:Client:getClientEmailHostPartialList", {"id":client.id})) }}
+        </div>
+    </div>
+    <!--End panel body -->
+</section>
+<!--End Panel 3-->
+
+<div id="addEmailHost" class="modal fade "  data-header-color="#0AA699">
+    {{ form_start(new_email_host_form, {"action": url("seven_fe_client.email_host.new",{"id":client.id}), "attr":{"id":"email_hostForm"} }) }}
+    <div class="modal-header">
+        <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title">Add Email Host</h4>
+    </div>
+    <!-- //modal-header-->
+    <div class="modal-body">
+        <div class="form-group">
+            {{ form_label(new_email_host_form.booking.provider_account) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.provider_account, {"attr":{"class":"form-control"} } ) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_email_host_form.booking.address) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.address, {"attr":{"class":"form-control", "placeholder": "Address"} }) }}
+            </div>
+        </div>
+        <div class="form-group" style="display: inline-block; margin-right:30px;">
+            {{ form_label(new_email_host_form.booking.start) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.start) }}
+            </div>
+        </div>
+        <div class="form-group" style="display: inline-block;">
+            {{ form_label(new_email_host_form.booking.end) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.end) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_email_host_form.booking.price) }}
+
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.price, {"attr":{"class":"form-control"} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_email_host_form.no_of_mailboxes) }}
+
+            <div class="input">
+                {{ form_widget(new_email_host_form.no_of_mailboxes, {"attr":{"class":"form-control"} }) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_email_host_form.booking.notes) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.notes, {"rows":"3", "attr":{"class":"form-control"} }) }}
+                {#<textarea rows="3" class="form-control"></textarea>#}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(new_email_host_form.booking.description) }}
+            <div class="input">
+                {{ form_widget(new_email_host_form.booking.description, {"rows":"3", "attr":{"class":"form-control"} }) }}
+            </div>
+        </div>
+        <div class="errorsWrapper"></div>
+    </div>
+
+    <!-- //modal-body-->
+    <footer class="panel-footer">
+        <button class="btn btn-theme newSubmit" data-route="seven_fe_client.email_hosts.display" data-wrapper="email_hostsWrapper" type="submit">save</button>
+        <button class="btn modal_reset" type="reset">Cancel</button>
+    </footer>
+    {{ form_rest(new_email_host_form) }}
+    {{ form_end(new_email_host_form) }}
+</div>

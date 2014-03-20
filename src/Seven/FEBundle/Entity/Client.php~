@@ -1,0 +1,67 @@
+<?php
+namespace Seven\FEBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Seven\FEBundle\Entity\Partial\BasicInfo;
+use Seven\FEBundle\Entity\Utilities\ImageContainer;
+
+/**
+ * @ORM\Entity(repositoryClass="Seven\FEBundle\Repository\ClientRepository")
+ * @ORM\Table(name="clients")
+ * @ORM\HasLifecycleCallbacks
+ */
+class Client
+{
+//    use BasicInfo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ClientContact", mappedBy="client", cascade={"persist"})
+     */
+    protected $contacts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProviderAccount", mappedBy="client")
+     */
+    protected $provider_accounts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Domain", mappedBy="client", cascade={"persist", "remove"})
+     */
+    protected $domains;
+
+    /**
+     * @ORM\OneToMany(targetEntity="EmailHost", mappedBy="client", cascade={"persist", "remove"})
+     */
+    protected $email_hosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Host", mappedBy="client", cascade={"persist", "remove"})
+     */
+    protected $hosts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Maintenance", mappedBy="client", cascade={"persist", "remove"})
+     */
+    protected $maintenance;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Miscellaneous", mappedBy="client", cascade={"persist", "remove"})
+     */
+    protected $miscellaneous;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="Seven\FEBundle\Entity\Utilities\ImageContainer", cascade={"persist", "remove"})
+     */
+    protected $image_container;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $address;
+}

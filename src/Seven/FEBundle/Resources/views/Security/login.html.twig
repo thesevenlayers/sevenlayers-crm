@@ -1,0 +1,106 @@
+{% extends "@SevenFE/layout_security.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+
+    {%  block fos_user_content %}
+
+        <form action="{{ path("fos_user_security_check") }}" id="form-signin" class="form-signin" method="post">
+
+            <section>
+
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                    {#<input type="text" id="_username" class="form-control" name="_username" placeholder="Username">#}
+                    <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" placeholder="Username" required="required" />
+
+                </div>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-key"></i></div>
+                    {#<input type="password" id="_password" class="form-control"  name="_password" placeholder="Password">#}
+                    <input type="password" id="password" class="form-control" name="_password" placeholder="Password" required="required" />
+
+                </div>
+                {#<button class="btn btn-lg btn-theme-inverse btn-block" name="_submit" type="submit" id="submit">Sign in</button>#}
+                <input class="btn btn-lg btn-theme-inverse btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+
+        </section>
+
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <section class="clearfix">
+                <div class="iCheck pull-left"  data-color="red">
+                    <input type="checkbox" id="remember_me" name="_remember_me" />
+
+        <label>Remember</label>
+                </div>
+                <a href="{{ url("fos_user_resetting_request") }}" class="pull-right help forgetPass">Forget Password? </a>
+            </section>
+            {% if error %}
+                <div>{{ error|trans }}</div>
+            {% endif %}
+
+        </form>
+    {% endblock fos_user_content %}
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function() {
+            //Login animation to center
+            function toCenter(){
+                var mainH=$("#main").outerHeight();
+                var accountH=$(".account-wall").outerHeight();
+                var marginT=(mainH-accountH)/2;
+                if(marginT>30){
+                    $(".account-wall").css("margin-top",marginT-15);
+                }else{
+                    $(".account-wall").css("margin-top",30);
+                }
+            }
+            toCenter();
+            var toResize;
+            $(window).resize(function(e) {
+                clearTimeout(toResize);
+                toResize = setTimeout(toCenter(), 500);
+            });
+
+            //Canvas Loading
+            var throbber = new Throbber({  size: 32, padding: 17,  strokewidth: 2.8,  lines: 12, rotationspeed: 0, fps: 15 });
+            throbber.appendTo(document.getElementById('canvas_loading'));
+            throbber.start();
+
+            $("#form-signin").submit(function(event){
+                event.preventDefault();
+                var main=$("#main");
+                //scroll to top
+                main.animate({
+                    scrollTop: 0
+                }, 500);
+                main.addClass("slideDown");
+
+                // send username and password to php check login
+                $.ajax({
+                    url: "login_check",
+                    data: $(this).serialize(),
+                    type: "POST",
+                    dataType: 'json',
+                    success: function (e) {
+                        setTimeout(function () { main.removeClass("slideDown") }, !e.status ? 500:3000);
+                        if (!e.status) {
+                            $.notific8('Check Username or Password again !! ',{ life:5000,horizontalEdge:"bottom", theme:"danger" ,heading:" ERROR :); "});
+                            return false;
+                        }
+                        setTimeout(function () { $("#loading-top span").text("Yes, account is access...") }, 250);
+                        setTimeout(function () { $("#loading-top span").text("Redirect to account page...")  }, 750);
+                        setTimeout( "window.location.href='{{ url("seven_fe_dashboard") }}'", 1500 );
+                    }
+                });
+
+            });
+        });
+    </script>
+{% endblock %}

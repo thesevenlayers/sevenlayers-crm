@@ -1,0 +1,33 @@
+{% extends "@SevenFE/layout.html.twig" %}
+
+
+{% block main %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url("seven_fe_dashboard") }}">Dashboard</a></li>
+        <li><a href="{{ url("seven_fe_provider_accounts") }}">Provider Accounts</a></li>
+    </ol>
+    <!-- //breadcrumb-->
+
+<div id="content">
+    <div class="row">
+        {{ include("@SevenFE/Default/ProviderAccount/provider_accounts.html.twig") }}
+    </div>
+    <!-- // Row-->
+
+
+    {#</div>#}
+    <!-- //content-->
+    {% endblock main %}
+
+    {% block moving_content %}
+        {{ parent() }}
+    {% endblock moving_content %}
+
+    {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/actions_ajax.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/dom_observer.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/search_ajax.js") }}"></script>
+{% endblock javascripts %}

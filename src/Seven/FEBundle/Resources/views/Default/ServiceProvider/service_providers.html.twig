@@ -1,0 +1,78 @@
+<section class="panel">
+    <header class="panel-heading">
+        <h2><strong>Service Provider</strong></h2>
+    </header>
+    <!--End Header-->
+    <div class="panel-tools fully color " align="right" data-toolscolor="theme-inverse">
+        <ul class="tooltip-area">
+            <li><a href="javascript:void(0)" class="btn btn-collapse" title="Collapse"><i
+                           class="fa fa-sort-amount-asc"></i></a></li>
+        </ul>
+    </div>
+    <!--End panel Tools-->
+    <div class="panel-body">
+        <div class="head col-md-12">
+            <button data-target="#addServiceProvider" data-toggle="modal" class="btn btn-primary pull-right" type="button"><i
+                        class="fa fa-pencil"></i> Add Service Provider
+            </button>
+            <div class="col-md-4 pull-right  ">
+                <div class="input-icon"><i class="ico fa fa-search"></i><input type="text" aria-controls="toggle-column"
+                                                                               class="form-control inputSearch"
+                                                                               data-url="seven_fe_service_providers.list"
+                                                                               data-wrapper="service_providersWrapper"
+                                                                               data-controller_id="null"
+                                                                               id="toggle-column_filter_input"
+                                                                               placeholder="Search...">
+                </div>
+            </div>
+        </div>
+        <!--End Head-->
+        <div id="service_providersWrapper" class="col-md-12 serviesTable wrapperToWatch">
+            {{ render_esi(controller("SevenFEBundle:ServiceProvider:getServiceProviderPartialList")) }}
+        </div>
+    </div>
+    <!--End panel body -->
+</section>
+<!--End Panel 3-->
+
+<div id="addServiceProvider" class="modal fade "  data-header-color="#0AA699">
+    {{ form_start(form, {"action": url("seven_fe_service_provider.new"), "attr":{"id":"service_providerForm"} }) }}
+        <div class="modal-header">
+            <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+            <h4 class="modal-title">Add Service Provider</h4>
+        </div>
+        <!-- //modal-header-->
+        <div class="modal-body">
+            <div class="form-group">
+                {{ form_label(form.name) }}
+                <div class="input">
+                    {{ form_widget(form.name, {"attr": {"class": "form-control name_input", "placeholder": "Name"} }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.address) }}
+                <div class="input-icon"> <i class="fa fa-map-marker ico"></i>
+                    {{ form_widget(form.address, {"attr": {"class": "form-control address_input", "placeholder": "Address"} }) }}
+                </div>
+            </div>
+            <div class="form-group img_crop">
+                <label>Logo</label>
+                <button class="btn btn-info logo_input">Select</button>
+                <div style="color: red;font-weight: bold;" class="error_wrapper"></div>
+
+                <div class="uploadAvatar thumbnail">
+                    <img class="" src="{{ asset("bundles/sevenfe/img/avatar.png") }}">
+                    <p></p>
+                </div>
+            </div>
+            <div class="errorsWrapper"></div>
+        </div>
+
+    <!-- //modal-body-->
+        <footer class="panel-footer">
+            <button class="btn btn-theme newSPSubmit" data-route="seven_fe_client.service_providers.display" data-wrapper="service_providersWrapper" type="submit">save</button>
+            <button class="btn modal_reset" type="reset">Cancel</button>
+        </footer>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>

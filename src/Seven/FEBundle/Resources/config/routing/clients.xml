@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="seven_fe_clients" pattern="/clients">
+        <default key="_controller">SevenFEBundle:Client:index</default>
+    </route>
+
+    <route id="seven_fe_clients_list" pattern="/clients/list">
+        <default key="_controller">SevenFEBundle:Client:getClientsListPartial</default>
+    </route>
+
+    <route id="seven_fe_clients.new" pattern="/clients/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:new</default>
+    </route>
+
+    <route id="seven_fe_clients.delete" pattern="/clients/delete/{id}" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:delete</default>
+    </route>
+
+    <route id="seven_fe_client.display" pattern="/clients/{id}/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:displayClient</default>
+    </route>
+
+    <!--============= Contacts ==================-->
+
+    <route id="seven_fe_client.contacts.display" pattern="/clients/{id}/contact/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientContactPartialList</default>
+    </route>
+
+    <route id="seven_fe_client.contact.new" pattern="/clients/{id}/contact/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewContact</default>
+    </route>
+
+    <route id="seven_fe_client.contact.edit" pattern="/clients/contact/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditContact</default>
+    </route>
+
+    <route id="seven_fe_client.contact.change_primary" pattern="/clients/contact/{id}/change_primary" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:postContactChangePrimary</default>
+    </route>
+
+    <route id="seven_fe_client.contacts.delete" pattern="/clients/contact/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteContact</default>
+    </route>
+
+    <!--============== Domain ================-->
+
+    <route id="seven_fe_client.domains.display" pattern="/clients/{id}/domain/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientDomainPartialList</default>
+    </route>
+
+    <route id="seven_fe_client.domain.new" pattern="/clients/{id}/domain/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewDomain</default>
+    </route>
+
+    <route id="seven_fe_client.domain.edit" pattern="/clients/domain/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditDomain</default>
+    </route>
+
+    <route id="seven_fe_client.domain.delete" pattern="/clients/domain/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteDomain</default>
+    </route>
+
+    <route id="seven_fe_client.domain.renew" pattern="/clients/domain/{id}/renew" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postRenewDomain</default>
+    </route>
+
+    <!--============== Host ================-->
+
+    <route id="seven_fe_client.hosts.display" pattern="/clients/{id}/host/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientHostPartialList</default>
+    </route>
+
+    <route id="seven_fe_client.host.new" pattern="/clients/{id}/host/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewHost</default>
+    </route>
+
+    <route id="seven_fe_client.host.edit" pattern="/clients/host/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditHost</default>
+    </route>
+
+    <route id="seven_fe_client.host.delete" pattern="/clients/host/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteHost</default>
+    </route>
+
+    <route id="seven_fe_client.host.renew" pattern="/clients/host/{id}/renew" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postRenewHost</default>
+    </route>
+
+    <!--============== EmailHost ================-->
+
+    <route id="seven_fe_client.email_hosts.display" pattern="/clients/{id}/email_host/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientEmailHostPartialList</default>
+    </route>
+
+    <route id="seven_fe_client.email_host.new" pattern="/clients/{id}/email_host/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewEmailHost</default>
+    </route>
+
+    <route id="seven_fe_client.email_host.edit" pattern="/clients/email_host/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditEmailHost</default>
+    </route>
+
+    <route id="seven_fe_client.email_host.delete" pattern="/clients/email_host/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteEmailHost</default>
+    </route>
+
+    <route id="seven_fe_client.email_host.renew" pattern="/clients/email_host/{id}/renew" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postRenewEmailHost</default>
+    </route>
+
+    <!--============== Maintenance ================-->
+
+    <route id="seven_fe_client.maintenances.display" pattern="/clients/{id}/maintenance/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientMaintenancePartialList</default>
+    </route>
+
+    <route id="seven_fe_client.maintenance.new" pattern="/clients/{id}/maintenance/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewMaintenance</default>
+    </route>
+
+    <route id="seven_fe_client.maintenance.edit" pattern="/clients/maintenance/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditMaintenance</default>
+    </route>
+
+    <route id="seven_fe_client.maintenance.delete" pattern="/clients/maintenance/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteMaintenance</default>
+    </route>
+
+    <route id="seven_fe_client.maintenance.renew" pattern="/clients/maintenance/{id}/renew" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postRenewMaintenance</default>
+    </route>
+
+    <!--============== Miscellaneous ================-->
+
+    <route id="seven_fe_client.miscs.display" pattern="/clients/{id}/misc/display" methods="GET">
+        <default key="_controller">SevenFEBundle:Client:getClientMiscPartialList</default>
+    </route>
+
+    <route id="seven_fe_client.misc.new" pattern="/clients/{id}/misc/new" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postNewMisc</default>
+    </route>
+
+    <route id="seven_fe_client.misc.edit" pattern="/clients/misc/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postEditMisc</default>
+    </route>
+
+    <route id="seven_fe_client.misc.delete" pattern="/clients/misc/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postDeleteMisc</default>
+    </route>
+
+    <route id="seven_fe_client.misc.renew" pattern="/clients/misc/{id}/renew" methods="POST">
+        <default key="_controller">SevenFEBundle:Client:postRenewMisc</default>
+    </route>
+
+</routes>
+

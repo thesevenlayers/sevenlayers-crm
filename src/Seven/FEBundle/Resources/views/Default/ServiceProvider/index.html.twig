@@ -1,0 +1,69 @@
+{% extends "@SevenFE/layout.html.twig" %}
+
+
+{% block main %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url("seven_fe_dashboard") }}">Dashboard</a></li>
+        <li><a href="{{ url("seven_fe_service_providers") }}">Service Providers</a></li>
+    </ol>
+    <!-- //breadcrumb-->
+
+<div id="content">
+<div class="row">
+    {{ include("@SevenFE/Default/ServiceProvider/service_providers.html.twig") }}
+</div>
+<!-- // Row-->
+
+
+{#</div>#}
+<!-- //content-->
+{% endblock main %}
+
+{% block moving_content %}
+    {{ parent() }}
+{% endblock moving_content %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script src="{{ asset("bundles/sevenfe/js/actions_ajax.js") }}"></script>
+<script src="{{ asset("bundles/sevenfe/js/dom_observer.js") }}"></script>
+<script src="{{ asset("bundles/sevenfe/js/search_ajax.js") }}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        /**
+         *----------------------------------------------------------------------------------------
+         * Plupload Specific
+         */
+
+        var uploader = new Pluploader({
+            wrapperID: "addServiceProvider",
+            listWrapperClass: "wrapperToWatch",
+            browseClass: "logo_input",
+            saveButtonClass: "newSPSubmit",
+            thumbClass: "thumbnail",
+            targetUrl: '{{ url("seven_fe_service_provider.new") }}',
+            imageAvatar: "{{ asset('bundles/sevenfe/img/avatar.png') }}",
+            multipartVars:
+            {
+                "name_input": $(".name_input").val(),
+                "address_input": $(".address_input").val()
+            },
+            filtersVars:
+            {
+                mime_types: [
+                    { title: "Image files", extensions : "jpg,gif,png"}
+                ]
+            },
+            ajaxLoadUrl: '{{ url("seven_fe_service_providers.list") }}'
+        });
+
+        uploader.init();
+
+    })
+
+</script>
+
+{% endblock javascripts %}

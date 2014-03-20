@@ -1,0 +1,199 @@
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Logo</th>
+        <th>Provider</th>
+        <th>Maintenance Name</th>
+        <th>Expiration</th>
+        <th>Price</th>
+        <th>Notes</th>
+        <th>Description</th>
+        <th width="30%">Action</th>
+    </tr>
+    </thead>
+    <tbody align="center">
+    {% for entry in data_arr %}
+        <tr id="maintenance_{{ entry["maintenance"].id }}">
+            <td><img src="{{ entry["maintenance"].providerAccount.serviceProvider.imageContainer ? asset(entry["maintenance"].providerAccount.serviceProvider.imageContainer.images[0].getWebPath) : asset("bundles/sevenfe/img/avatar.png")}}"></td>
+            <td valign="middle">{{ entry["maintenance"].providerAccount.serviceProvider.name }}</td>
+            <td valign="middle">{{ entry["maintenance"].address }}</td>
+            <td class="{{ entry["maintenance"].IsNearExpiration ? "alertDanger" }}"
+                valign="middle">{{ entry["maintenance"].end|date("m/d/Y") }}</td>
+            <td>{{ entry["maintenance"].price }}$</td>
+            <td class="popover-area-hover align-lg-center">
+                <button type="button" class="btn notes  btn-success" data-toggle="popover" data-placement="top"
+                        data-content="{{ entry["maintenance"].notes }}" data-original-title="Notes">N
+                </button>
+            </td>
+            <td class="popover-area-hover align-lg-center">
+                <button type="button" class="btn notes des btn-success" data-toggle="popover" data-placement="top"
+                        data-content="{{ entry["maintenance"].description }}" data-original-title="Description">D
+                </button>
+            </td>
+            <td>
+                    <span class="tooltip-area">
+                        <a href="#renew_{{ entry["maintenance"].id }}" data-toggle="modal" class="btn btn-default btn-sm edit" title="Renew"><i
+                                    class="fa fa-refresh"></i></a>
+                        <a href="#userAndPass_{{ entry["maintenance"].id }}" data-toggle="modal" class="btn btn-default btn-sm edit" title="Open"><i
+                                    class="fa fa-eye"></i></a>
+                        <a href="#edit_maintenance_{{ entry["maintenance"].id }}" data-toggle="modal" class="btn btn-default btn-sm edit" title="Edit"><i
+                                    class="fa fa-pencil"></i></a>
+                        <a href="#delete_maintenance_{{ entry["maintenance"].id }}" data-toggle="modal" class="btn btn-default btn-sm" title="Delete"><i
+                                    class="fa fa-trash-o"></i></a>
+                    </span>
+
+                    <div id="edit_maintenance_{{ entry["maintenance"].id }}" class="modal fade "  data-header-color="#0AA699">
+                        {{ form_start(entry["edit_form"], {"action": url("seven_fe_client.maintenance.edit",{"id":entry["maintenance"].id}) }) }}
+                        <div class="modal-header">
+                            <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                            <h4 class="modal-title">Edit Maintenance</h4>
+                        </div>
+                        <!-- //modal-header-->
+                        <div class="modal-body">
+                            <div class="form-group">
+                                {{ form_label(entry["edit_form"].booking.provider_account) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.provider_account, {"attr":{"class":"form-control"} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(entry["edit_form"].booking.address) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.address, {"attr":{"class":"form-control", "placeholder": "Address"} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group" style="display: inline-block; margin-right:30px;">
+                                {{ form_label(entry["edit_form"].booking.start) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.start) }}
+                                </div>
+                            </div>
+                            <div class="form-group" style="display: inline-block;">
+                                {{ form_label(entry["edit_form"].booking.end) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.end) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(entry["edit_form"].booking.price) }}
+
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.price, {"attr":{"class":"form-control"} }) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(entry["edit_form"].booking.notes) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.notes, {"rows":"3", "attr":{"class":"form-control"} }) }}
+                                    {#<textarea rows="3" class="form-control"></textarea>#}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(entry["edit_form"].booking.description) }}
+                                <div class="input">
+                                    {{ form_widget(entry["edit_form"].booking.description, {"rows":"3", "attr":{"class":"form-control"} }) }}
+                                </div>
+                            </div>
+                            <div class="errorsWrapper"></div>
+
+                        </div>
+                        <!-- //modal-body-->
+                        <footer class="panel-footer">
+                            <button id="" class="btn btn-theme editSubmit" data-wrapper="maintenancesWrapper" data-route="seven_fe_client.maintenances.display" type="submit">save</button>
+                            <button class="btn modal_reset" type="reset">Cancel</button>
+                        </footer>
+                        {{ form_rest(entry["edit_form"]) }}
+                        {{ form_end(entry["edit_form"]) }}
+                    </div>
+
+
+                <div id="delete_maintenance_{{ entry["maintenance"].id }}" class="modal fade" data-width="350" data-header-color="#0AA699">
+                    <div class="modal-header">
+                        <button style="margin-top:-10px;" type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- //modal-header-->
+                    <div class="modal-body">
+                        Are you sure you want to delete this?
+                    </div>
+                    <!-- //modal-body-->
+                    <footer class="panel-footer">
+                        <form action="{{ url("seven_fe_client.maintenance.delete", {"id": entry["maintenance"].id}) }}" method="post">
+                            <button  data-wrapper="maintenance_{{ entry["maintenance"].id }}" class="btn btn-theme deleteRecord" type="submit">Delete</button>
+                            <button class="btn" data-dismiss="modal" type="reset">Cancel</button>
+                        </form>
+                    </footer>
+                </div>
+
+                <div id="userAndPass_{{ entry["maintenance"].id }}" class="modal fade " data-width="350"  data-header-color="#0AA699">
+                    <div class="modal-header">
+                        <button style="margin-top:-10px;" type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- //modal-header-->
+                    <div class="modal-body">
+                        <div>
+                            <label>User name :</label>
+                            <label>{{ entry["maintenance"].providerAccount.username }}</label>
+                        </div>
+                        <div>
+                            <label>Password :</label>
+                            <label class="originalPass" style="display: none;">{{ entry["maintenance"].providerAccount.password }}</label>
+                            <label class="labelvalidation hiddenPass">******</label>
+                            <button class="btn btn-default btn-sm passRevealer" type="button"><i class="fa fa-eye"></i></button>
+                        </div>
+
+                    </div>
+                    <!-- //modal-body-->
+                </div>
+
+                <div id="renew_{{ entry["maintenance"].id }}" class="modal modal fade container in "  data-header-color="#0AA699">
+                    <div class="modal-header">
+                        <button type="button" class="close modal_close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                        <h4 class="modal-title">Renew</h4>
+                    </div>
+                    <!-- //modal-header-->
+                    <form action="{{ url("seven_fe_client.maintenance.renew", {"id": entry["maintenance"].id }) }}" method="post">
+                        <div class="modal-body">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Provider</th>
+                                    <th>Expiration</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody align="center">
+                                <tr>
+                                    <td><img src="assets/img/avatar_2.png"></td>
+                                    <td>{{ entry["maintenance"].providerAccount.serviceProvider.name }}</td>
+                                    <td>{{ entry["maintenance"].end|date("d/m/Y") }}</td>
+                                    <td><input name="new_price" type="text" class="form-control"/></td>
+                                    <td>
+                                        <select name="extension_period" class="form-control input-sm">
+                                            <option value="1">1 years</option>
+                                            <option value="2">2 years</option>
+                                            <option value="3">3 years</option>
+                                            <option value="4">4 years</option>
+                                            <option value="5">5 years</option>
+                                            <option value="6">6 years</option>
+                                            <option value="7">7 years</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table> <!--End Table-->
+                        </div>
+                        <!-- //modal-body-->
+                        <footer class="panel-footer">
+                            <button class="btn btn-theme renewRecord" data-wrapper="maintenancesWrapper" data-route="seven_fe_client.maintenances.display" type="submit">save</button>
+                            <button class="btn modal_reset" data-dismiss="modal" type="reset">Cancel</button>
+                        </footer>
+                    </form>
+                </div>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table> <!--End

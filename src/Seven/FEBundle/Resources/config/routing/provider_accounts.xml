@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="seven_fe_provider_accounts" pattern="/provider_accounts">
+        <default key="_controller">SevenFEBundle:ProviderAccount:index</default>
+    </route>
+
+    <route id="seven_fe_provider_accounts.list" pattern="/provider_accounts/list">
+        <default key="_controller">SevenFEBundle:ProviderAccount:getProviderAccountPartialList</default>
+    </route>
+
+    <route id="seven_fe_provider_account.new" pattern="/provider_accounts/new" methods="POST">
+        <default key="_controller">SevenFEBundle:ProviderAccount:postNewProviderAccount</default>
+    </route>
+
+    <route id="seven_fe_provider_account.edit" pattern="/provider_accounts/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:ProviderAccount:postEditProviderAccount</default>
+    </route>
+
+    <route id="seven_fe_provider_account.delete" pattern="/provider_accounts/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:ProviderAccount:delete</default>
+    </route>
+
+</routes>
+

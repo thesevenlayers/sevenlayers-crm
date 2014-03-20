@@ -1,0 +1,38 @@
+<?php
+namespace Seven\FEBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Seven\FEBundle\Entity\Partial\BasicInfo;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="provider_accounts")
+ */
+class ProviderAccount
+{
+//    use BasicInfo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="provider_accounts")
+     */
+    protected $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ServiceProvider", inversedBy="provider_accounts")
+     */
+    protected $service_provider;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $username;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $password;
+}

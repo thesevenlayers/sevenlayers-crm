@@ -1,0 +1,38 @@
+<?php
+namespace Seven\FEBundle\Entity;
+
+use Seven\FEBundle\Entity\Partial\BookingInfo;
+use Seven\FEBundle\Entity\Partial\ExpirationCheck;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+use Seven\FEBundle\Entity\Partial\BasicInfo;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="hosts")
+ * @ORM\HasLifecycleCallbacks
+ */
+class Host
+{
+//    use BasicInfo;
+//    use ExpirationCheck;
+//    use BookingInfo;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="FTP")
+     */
+    protected $ftp;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="DB")
+     */
+    protected $db;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="CPanel")
+     */
+    protected $cpanel;
+}

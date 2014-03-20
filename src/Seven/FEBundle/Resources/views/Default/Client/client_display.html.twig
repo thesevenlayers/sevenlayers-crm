@@ -1,0 +1,235 @@
+{% extends "@SevenFE/layout.html.twig" %}
+
+
+{% block main %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url("seven_fe_dashboard") }}">Dashboard</a></li>
+        <li><a href="{{ url("seven_fe_clients") }}">Clients</a></li>
+        <li><a href="{{ url("seven_fe_client.display", {"id": client.id}) }}">{{ client.name }}</a></li>
+    </ol>
+    <!-- //breadcrumb-->
+
+    <div id="content">
+    <div class="row">
+    <section class="panel">
+        <header class="panel-heading">
+            <h2><strong>Information</strong></h2>
+        </header>
+        <div class="panel-tools color" align="right" data-toolscolor="theme-inverse">
+            <ul class="tooltip-area">
+                <li><a href="javascript:void(0)" class="btn  btn-collapse" title="Collapse"><i class="fa fa-sort-amount-asc"></i></a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 information" >
+                <div class="col-md-12">
+                    <label><strong>Name :</strong> {{ client.name }}</label>
+                    <label><strong>Address :</strong>{{ client.address }}</label>
+                </div>
+            </div> <!--End INFormation-->
+        </div> <!--End Panel Body-->
+    </section> <!--EndPanel 1-->
+    {{ include("@SevenFE/Default/Client/client_contacts.html.twig") }}
+    {{ include("@SevenFE/Default/Client/client_domains.html.twig") }}
+    {{ include("@SevenFE/Default/Client/client_hosts.html.twig") }}
+    {{ include("@SevenFE/Default/Client/client_email_hosts.html.twig") }}
+    {{ include("@SevenFE/Default/Client/client_maintenances.html.twig") }}
+    {{ include("@SevenFE/Default/Client/client_miscs.html.twig") }}
+    </div>
+    <!-- // Row-->
+
+
+    {#</div>#}
+    <!-- //content-->
+    {% endblock main %}
+
+    {% block moving_content %}
+        {{ parent() }}
+    {% endblock moving_content %}
+
+    {% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /********************************************/
+            /********** Modals & CRUD Ajax *************/
+            /*******************************************/
+
+            $("body").on("click", ".newSubmit, .editSubmit", function(e){
+                e.preventDefault();
+
+                var form = $(e.target).closest("form");
+                $(e.target).attr("disabled", "disabled");
+                $(e.target).text("Saving");
+                $.ajax({
+                    type: "POST",
+                    url: $(form).attr("action"),
+                    data: $(form).serialize(),
+                    success: function(data){
+                        if(data.code == 200)
+                        {
+                            $(form).find(".modal_reset").click();
+                            $(form).find(".modal_close").click();
+                            var url = Routing.generate($(e.target).data("route"), {id: "{{ client.id}}" } );
+                            $("#"+$(e.target).data("wrapper")).load(url);
+                        }
+                        else if(data.code == 403)
+                        {
+                            var errors_wrapper = $(e.target).parent().siblings(".modal-body").find(".errorsWrapper");
+                            errors_wrapper.empty();
+                            var list = $('<ul style="color: red;">');
+                            $.each(data.message, function(key, val){
+                                var li = $("<li>");
+                                li.text(val);
+                                list.append(li);
+                            })
+                            errors_wrapper.append(list);
+                        }
+                        $(e.target).removeAttr("disabled");
+                        $(e.target).text("save");
+                    }
+                });
+            });
+
+            $("body").on("click", ".contact_change_primary", function(e){
+                e.preventDefault();
+                var url = $(e.target).attr("href");
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(data){
+                        var url = Routing.generate("seven_fe_client.contacts.display", {id: "{{ client.id}}" } );
+                        $("#contactsWrapper").load(url);
+                    }
+                })
+            })
+
+            $("body").on("click", ".deleteRecord", function(e){
+                e.preventDefault();
+                $(e.target).attr("disabled", "disabled");
+                $(e.target).text("Deleting");
+                var url = $(e.target).parent().attr("action");
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    success: function(data)
+                    {
+                        if(data.success){
+                            $(e.target).parent().parent().siblings(".modal-header").find("button").click();
+                            $(e.target).removeAttr("disabled");
+                            $(e.target).text("Delete");
+                            var c_id = $(e.target).data("wrapper");
+                            $("tr#"+ c_id).remove();
+                        }
+                    }
+                 })
+            });
+
+            $("body").on("click", ".renewRecord", function(e){
+                e.preventDefault();
+                $(".modal_reset").click();
+                $(".modal_close").click();
+
+                var form = $(e.target).closest("form");
+                var url = form.attr("action");
+                var wrapper = $(e.target).data("wrapper");
+                var route = $(e.target).data("route");
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(),
+                    success: function(data)
+                    {
+                        var url = Routing.generate(route, {id: "{{ client.id}}" } );
+                        $("#"+wrapper).load(url);
+                    }
+                })
+            });
+
+            $("a.toggle-column").on('click',function(e){
+                $(this).toggleClass( "toggle-column-hide" );
+                $(this).find('.fa').toggleClass( "fa-times" );
+            });
+
+            $("body").on("click", ".passRevealer", function(e){
+                $(e.target).siblings(".originalPass").toggle();
+                $(e.target).siblings(".hiddenPass").toggle();
+            });
+
+
+            /*********************************************************/
+            /*********** Mutation Observer (domainsWrapper) **********/
+            /*
+                Loads (Ajax) popover plugin after each ajax load call
+            */
+            /********************************************************/
+
+            var target = $('.wrapperToWatch');
+
+            var config = { attributes: true, childList: true, characterData: true };
+
+            function mutationHandler(mutations){
+                mutations.forEach(function(mutation){
+                    $('.popover-area [data-toggle="popover"]').popover();
+                    $('.popover-area-hover [data-toggle="popover"]').popover({ trigger:"hover" });
+                })
+            }
+
+            var observer = new MutationObserver(mutationHandler);
+
+            $.each(target, function(key, val){
+                observer.observe(this, config);
+            });
+
+
+            /**********************************************/
+            /********* Search Initialization **************/
+            /*
+             * Search textbox and Dropdown filtration
+             */
+            /*********************************************/
+
+
+            $(".inputSearch").on("keyup", function(e){
+                initSearch($(e.target), $(".dropdown-menu"));
+            });
+
+            $(".dropdown-menu").on("click", "a.toggle-column", function(e){
+                var search_input = $(e.target).closest("section.panel").find(".inputSearch");
+                initSearch(search_input, $(e.target).parent().parent());
+            })
+
+            function initSearch(input, dropdown)
+            {
+                var search_query = input.val();
+                var ignore_elements = dropdown.find("a.toggle-column-hide");
+
+                var controller_url = input.data("url");
+                var modal_wrapper = input.data("wrapper");
+
+                var enc_arr = null;
+                if(ignore_elements.length > 0)
+                {
+                    var io = {}; //$.param accepts object only
+                    io.isp = [];
+                    $.each(ignore_elements, function(key, value){
+                        io.isp.push($(value).data("id"));
+                    });
+                    enc_arr = $.param(io);
+                }
+                var url = Routing.generate(controller_url, {id: "{{ client.id}}", q: search_query, isp: enc_arr } );
+
+                $("#"+modal_wrapper).load(url);
+            }
+
+            /************* End search initialization **************/
+            /******************************************************/
+
+
+        });
+    </script>
+
+{% endblock javascripts %}

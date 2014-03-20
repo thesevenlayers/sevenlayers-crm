@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="seven_fe_service_providers" pattern="/service_providers">
+        <default key="_controller">SevenFEBundle:ServiceProvider:index</default>
+    </route>
+
+    <route id="seven_fe_service_providers.list" pattern="/service_providers/list">
+        <default key="_controller">SevenFEBundle:ServiceProvider:getServiceProviderPartialList</default>
+    </route>
+
+    <route id="seven_fe_service_provider.new" pattern="/service_providers/new" methods="POST">
+        <default key="_controller">SevenFEBundle:ServiceProvider:new</default>
+    </route>
+
+    <route id="seven_fe_service_provider.edit" pattern="/service_providers/{id}/edit" methods="POST">
+        <default key="_controller">SevenFEBundle:ServiceProvider:postEditContact</default>
+    </route>
+
+    <route id="seven_fe_service_provider.delete" pattern="/service_providers/{id}/delete" methods="POST">
+        <default key="_controller">SevenFEBundle:ServiceProvider:delete</default>
+    </route>
+
+</routes>
+

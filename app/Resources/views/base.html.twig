@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta information -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <!-- Title-->
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+
+
+        {% stylesheets
+        "bundles/sevenfe/css/bootstrap/bootstrap.min.css"
+        "bundles/sevenfe/css/bootstrap/bootstrap-themes.css"
+        "bundles/sevenfe/css/animation.css"
+        "bundles/sevenfe/css/jquery-ui.css"
+        "bundles/sevenfe/css/font-awesome/font-awesome.min.css"
+        "bundles/sevenfe/plugins/select2-3.4.5/select2.css"
+        filter="cssrewrite"
+        %}
+            <link type="text/css" rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
+        {#<link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/bootstrap/bootstrap.min.css") }}" />#}
+        {#<link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/bootstrap/bootstrap-themes.css") }}" />#}
+        <link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/style.css") }}" />
+        {#<link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/animation.css") }}" />#}
+        {#<link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/jquery-ui.css") }}" />#}
+        {#<link type="text/css" rel="stylesheet" href="{{ asset("bundles/sevenfe/css/font-awesome/font-awesome.min.css") }}" />#}
+    {% endblock %}
+
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset("bundles/sevenfe/img/ico/apple-touch-icon-144-precomposed.png") }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset("bundles/sevenfe/img/ico/apple-touch-icon-114-precomposed.png") }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset("bundles/sevenfe/img/ico/apple-touch-icon-72-precomposed.png") }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset("bundles/sevenfe/img/ico/apple-touch-icon-57-precomposed.png") }}">
+    <link rel="shortcut icon" href="{{ asset("bundles/sevenfe/img/SevenLayers.png") }}">
+    <script src="{{ asset("bundles/sevenfe/js/jquery.min.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/plugins/plupload-2.1.1/js/plupload.full.min.js") }}"></script>
+    <script src="{{ asset("bundles/sevenfe/js/uploader_save.js") }}"></script>
+</head>
+<body class="{% block body_class %}full-lg{% endblock %}">
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+        {% javascripts
+            "bundles/sevenfe/js/jquery.ui.min.js"
+            "bundles/sevenfe/plugins/bootstrap/bootstrap.min.js"
+            "bundles/sevenfe/js/modernizr/modernizr.js"
+            "bundles/sevenfe/plugins/mmenu/jquery.mmenu.js"
+            "bundles/sevenfe/plugins/holder/holder.js"
+            "bundles/sevenfe/plugins/form/form.js"
+            "bundles/sevenfe/plugins/datetime/datetime.js"
+            "bundles/sevenfe/plugins/chart/chart.js"
+            "bundles/sevenfe/js/caplet.custom.js"
+            "bundles/sevenfe/js/ImgCrop.js"
+            "bundles/sevenfe/plugins/select2-3.4.5/select2.js"
+            "bundles/thraceform/js/select2.js"
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+</body>
+</html>

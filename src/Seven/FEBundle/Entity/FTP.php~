@@ -1,0 +1,31 @@
+<?php
+namespace Seven\FEBundle\Entity;
+
+use Seven\FEBundle\Entity\Partial\BasicInfo;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="ftps")
+ * @ORM\HasLifecycleCallbacks
+ */
+class FTP
+{
+//    use BasicInfo;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $url;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $username;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $password;
+}

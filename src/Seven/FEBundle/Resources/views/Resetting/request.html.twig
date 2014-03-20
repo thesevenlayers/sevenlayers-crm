@@ -1,0 +1,8 @@
+{% extends "SevenFEBundle::layout_security.html.twig" %}
+
+{% block content %}
+{% block fos_user_content %}
+{% include "SevenFEBundle:Resetting:request_content.html.twig" %}
+    <a href="{{ url("fos_user_security_login") }}">Back</a>
+{% endblock fos_user_content %}
+{% endblock content %}

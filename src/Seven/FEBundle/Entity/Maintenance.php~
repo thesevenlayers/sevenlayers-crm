@@ -1,0 +1,211 @@
+<?php
+namespace Seven\FEBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+use Seven\FEBundle\Entity\Partial\BasicInfo;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="maintenance")
+ */
+class Maintenance
+{
+//    use BasicInfo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Client", inversedBy="maintenance")
+     */
+    protected $client;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ProviderAccount", inversedBy="maintenances")
+     */
+    protected $provider_account;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $address;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $start;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $end;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $notes;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $description;
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Domain
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set start
+     *
+     * @param \DateTime $start
+     * @return Domain
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * Get start
+     *
+     * @return \DateTime
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * Set end
+     *
+     * @param \DateTime $end
+     * @return Domain
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return \DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \Seven\FEBundle\Entity\Client $client
+     * @return Domain
+     */
+    public function setClient(\Seven\FEBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \Seven\FEBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param string $notes
+     * @return EmailHost
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Host
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set vendor
+     *
+     * @param \Seven\FEBundle\Entity\Vendor $vendor
+     * @return Maintenance
+     */
+    public function setVendor(\Seven\FEBundle\Entity\Vendor $vendor = null)
+    {
+        $this->vendor = $vendor;
+
+        return $this;
+    }
+
+    /**
+     * Get vendor
+     *
+     * @return \Seven\FEBundle\Entity\Vendor 
+     */
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+}
